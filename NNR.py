@@ -1,6 +1,7 @@
 import requests
 import json
 import pandas as pd
+from prettytable import PrettyTable
 
 payload = ""
 headers = {
@@ -48,3 +49,21 @@ df = pd.DataFrame(new_dicts)
 
 # 将DataFrame写入Excel文件
 df.to_excel('output.xlsx', index=False)
+
+
+# 创建一个PrettyTable对象
+pt = PrettyTable()
+
+# 设置表头
+pt.field_names = df.columns.tolist()
+
+# 添加数据
+for index, row in df.iterrows():
+    pt.add_row(row)
+
+# 将表格转换为字符串
+table_str = str(pt)
+
+# 将字符串写入TXT文件
+with open('output.txt', 'w') as f:
+    f.write(table_str)
